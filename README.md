@@ -1,5 +1,5 @@
 # Configmap-Signature-Project-MongoDB-Python-Flask-Web-Framework-REST-API-GKE
-# Step 1: Create MongoDB using Persistent Volume on GKE
+   ## Step 1: Create MongoDB using Persistent Volume on GKE
 1. Create a Cluster
    
        gcloud container clusters create kubia --num-nodes=1 --machine-type=e2 micro --region=us-west1
@@ -20,6 +20,7 @@
 
 3. Create MongoDB Deployment
    
+Create mongodb-deployment.yaml and apply it:
 
          apiVersion: apps/v1
          kind: Deployment
@@ -47,6 +48,29 @@
                    gcePersistentDisk:
                      pdName: mongodb
                      fsType: ext4
+Apply:
+
+      kubectl apply -f mongodb-deployment.yaml
+      
+4. Check Deployment Pod
+   
+         kubectl get pods
+
+
+
+4. Create Service
+
+         apiVersion: v1
+         kind: Service
+         metadata:
+           name: mongodb-service
+         spec:
+           type: LoadBalancer
+           ports:
+             - port: 27017
+               targetPort: 27017
+           selector:
+             app: mongodb
 
   
 
