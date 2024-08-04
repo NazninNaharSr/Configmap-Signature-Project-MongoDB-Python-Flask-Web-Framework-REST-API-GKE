@@ -17,6 +17,37 @@
 2. Create a Persistent Volume:
 
          gcloud compute disks create --size=10GiB --zone=us-west1-a mongodb
+
+3. Create MongoDB Deployment
+   
+
+         apiVersion: apps/v1
+         kind: Deployment
+         metadata:
+           name: mongodb-deployment
+         spec:
+           selector:
+             matchLabels:
+               app: mongodb
+           template:
+             metadata:
+               labels:
+                 app: mongodb
+             spec:
+               containers:
+                 - name: mongodb
+                   image: mongo
+                   ports:
+                     - containerPort: 27017
+                   volumeMounts:
+                     - mountPath: /data/db
+                       name: mongodb-persistent-storage
+               volumes:
+                 - name: mongodb-persistent-storage
+                   gcePersistentDisk:
+                     pdName: mongodb
+                     fsType: ext4
+
   
 
 
