@@ -57,8 +57,11 @@ Apply:
          kubectl get pods
 
 
-
-4. Create Service
+5. Create Service
+   
+         nano mongodb-service.yaml
+   
+In that file copy and paste this -
 
          apiVersion: v1
          kind: Service
@@ -71,6 +74,7 @@ Apply:
                targetPort: 27017
            selector:
              app: mongodb
+   6.
 
   
 
